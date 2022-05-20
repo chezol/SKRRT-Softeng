@@ -16,9 +16,9 @@ class _NewUserState extends State<NewUser> {
     return MediaQuery.of(context).size.width*0.1;
   }
 
-  bool _tabletSized(BuildContext context){
+  /*bool _tabletSized(BuildContext context){
     return MediaQuery.of(context).size.width > 700;
-  }
+  }*/
 
   void fieldFin(){
     complete = true;
@@ -169,8 +169,7 @@ class _NewUserState extends State<NewUser> {
                 canvasColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5),
                 primaryColor: Colors.black,
                 backgroundColor: Colors.white,
-                accentColor: Colors.white,
-                shadowColor: Colors.transparent,
+                shadowColor: Colors.transparent, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -203,7 +202,7 @@ class _NewUserState extends State<NewUser> {
                         currentStep: currentStep,
                         onStepCancel: cancel,
                         onStepTapped: (step) => goTo(step),
-                        controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) =>
+                        controlsBuilder: (BuildContext context, ControlsDetails controls) =>
                             Container(
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -237,7 +236,7 @@ class _NewUserState extends State<NewUser> {
                         currentStep: currentStep,
                         onStepCancel: cancel,
                         onStepTapped: (step) => goTo(step),
-                        controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) =>
+                        controlsBuilder: (BuildContext context, ControlsDetails controls) =>
                             Container(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(padding: EdgeInsets.all(12.0),
@@ -270,8 +269,7 @@ class _NewUserState extends State<NewUser> {
                 canvasColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5),
                 primaryColor: Color.fromARGB(255, 0x1E, 0x1E, 0x1E),
                 backgroundColor: Colors.white,
-                accentColor: Colors.white,
-                shadowColor: Colors.transparent,
+                shadowColor: Colors.transparent, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -307,7 +305,7 @@ class _NewUserState extends State<NewUser> {
                         currentStep: currentStep,
                         onStepCancel: cancel,
                         onStepTapped: goTo,
-                        controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) =>
+                        controlsBuilder: (BuildContext context, ControlsDetails controls) =>
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width * 0.07),
                               child: ElevatedButton(
@@ -342,7 +340,7 @@ class _NewUserState extends State<NewUser> {
                         onStepCancel: cancel,
                         onStepTapped: (step) => goTo(step),
 
-                        controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) =>
+                        controlsBuilder: (BuildContext context, ControlsDetails controls) =>
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width * 0.07),
                               child: ElevatedButton(

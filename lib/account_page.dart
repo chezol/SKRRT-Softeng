@@ -30,7 +30,7 @@ class _AccountState extends State<Account> {
 
     token = await session.get("token");
     //print(token);
-    var url = "http://192.168.1.12/skrrt/getStudentData.php";
+    var url = "http://192.168.1.17/skrrt/getStudentData.php";
     var data = {
       "userID": token.toString(),
     };
@@ -64,7 +64,7 @@ class _AccountState extends State<Account> {
     print(token);
     print(userChanged);
     print(passChanged);
-    var url = "http://192.168.1.12/skrrt/updateUser.php";
+    var url = "http://192.168.1.17/skrrt/updateUser.php";
     var data = {
       "userID": token.toString(),
       "username": userChanged,

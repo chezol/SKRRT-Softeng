@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:skrrt_app/admin_page.dart';
@@ -27,7 +27,7 @@ class _SideBarState extends State<SideBar> {
 
   void getRidesTaken() async{
     token = await session.get("token");
-    var url = "http://192.168.1.12/skrrt/ridesTaken-Name.php";
+    var url = "http://192.168.1.17/skrrt/ridesTaken-Name.php";
     var data = {
       "userid": token.toString(),
     };

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
@@ -29,7 +29,7 @@ class _SkrrtWalletState extends State<SkrrtWallet> {
   void getExpenses(int mo) async{
     var token = await session.get("token");
     //print(token);
-    var url = "http://192.168.1.12/skrrt/getExpenses.php";
+    var url = "http://192.168.1.17/skrrt/getExpenses.php";
     var data = {
       "userID": token.toString(),
       "monthS":"2020-"+mo.toString()+"-01",
@@ -70,7 +70,7 @@ class _SkrrtWalletState extends State<SkrrtWallet> {
 
     var token = await session.get("token");
     //print(token);
-    var url = "http://192.168.1.12/skrrt/getStudentData.php";
+    var url = "http://192.168.1.17/skrrt/getStudentData.php";
     var data = {
       "userID": token.toString(),
     };

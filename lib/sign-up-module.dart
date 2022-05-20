@@ -1,8 +1,10 @@
 //import 'dart:io';
+import 'dart:io';
+
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+//import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -36,26 +38,26 @@ class _SignUpController extends State<SignUpView> {
   TextEditingController dateCtl = TextEditingController();
   TextEditingController cam = TextEditingController();
   TextEditingController pass = TextEditingController();
-
   TextEditingController pin = TextEditingController();
 
-  PickedFile imageFile;
+  final picker = ImagePicker();
+  File imageFile;
   bool viewPass = true;
 
   final Telephony telephony = Telephony.instance;
 
  void createNewUser() async {
    //print("YES1");
-   var url = "http://192.168.1.12/skrrt/register.php";  //localhost, change 192.168.1.9 to ur own localhost
+   var url = "http://192.168.1.17/skrrt/register.php";  //localhost, change 192.168.1.9 to ur own localhost
    var data = {
-           "firstName": fname.text,
-           "lastName": lname.text,
+           "first": fname.text,
+           "last": lname.text,
            "idNo": idno.text,
            "status": status,
            "username": username.text,
            "password": pass.text,
            "phoneNo": phone.text,
-           "dateOfBirth": dateCtl.text,
+           "birthday": dateCtl.text,
            "course": drop1value,
            "year": drop2value,
            "dept": drop2value,
@@ -77,7 +79,7 @@ class _SignUpController extends State<SignUpView> {
 
   _openGallery (BuildContext context) async {
     // ignore: deprecated_member_use
-    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
     this.setState(() {
       imageFile = picture;
       if(imageFile != null)
@@ -87,7 +89,7 @@ class _SignUpController extends State<SignUpView> {
   }
 
   _openCamera(BuildContext context) async{
-    var picture = await ImagePicker().getImage(source: ImageSource.camera);
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture;
       if(imageFile != null)
@@ -128,7 +130,7 @@ class _SignUpController extends State<SignUpView> {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
-        timeInSecForIos: 1,
+        timeInSecForIosWeb: 1,
         fontSize: 16.0
     );
   }
@@ -231,6 +233,7 @@ class _SignUpController extends State<SignUpView> {
         to: "+1-555-521-5554",
         message: "<#> "+random+" Verification Code from Skrrt, your Rent-a-Scooter App. Please don't reply to this message. Thank you and welcome to the family! SKRRT SKRRT!"
     );
+    print(random);
   }
 
   goTo(int step) {
@@ -253,8 +256,8 @@ class _SignUpController extends State<SignUpView> {
   List<Step> get steps => [
     Step(
         title: const Text(''),
-        isActive: currentStep>=0,
-        state: currentStep >= 0 ? StepState.complete : StepState.disabled,
+        isActive: currentStep >= 0,
+        state: StepState.complete,
         content: Padding(
             padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width * 0.07),
             child: SizedBox(
@@ -275,19 +278,19 @@ class _SignUpController extends State<SignUpView> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
                   TextFormField(
                     controller: fname,
-                    cursorColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5),
-                    textInputAction: TextInputAction.next,
-                    textCapitalization: TextCapitalization.words,
-                    validator: (value){
+                     validator: (value) {
                       if(value.isEmpty){
-                        return 'First Name is required.';
+                        return 'First Name is required';
                       }
                       else if(!RegExp('^[A-Za-z]+\$').hasMatch(value)){
-                        return 'Invalid First Name.';
+                        return 'Invalid First Name';
                       }
                       else return null;
                     },
-                    onSaved: (name)=> fname.text = name,
+                    cursorColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5),
+                    textInputAction: TextInputAction.next,
+                    textCapitalization: TextCapitalization.words,
+                    onSaved: (value) => fname.text = value,
                     decoration: InputDecoration(
                         hintText: 'First Name',
                         hintStyle: TextStyle(
@@ -302,9 +305,7 @@ class _SignUpController extends State<SignUpView> {
                   ),
                   TextFormField(
                     controller: lname,
-                    textInputAction: TextInputAction.next,
-                    textCapitalization: TextCapitalization.words,
-                    validator: (value){
+                    validator: (String value){
                       if(value.isEmpty){
                         return 'Last Name is required.';
                       }
@@ -313,7 +314,9 @@ class _SignUpController extends State<SignUpView> {
                       }
                       else return null;
                     },
-                    onSaved: (name)=> lname.text = name,
+                    textInputAction: TextInputAction.next,
+                    textCapitalization: TextCapitalization.words,
+                    onSaved: (value)=> lname.text = value,
                     decoration: InputDecoration(
                         hintText: 'Last Name',
                         hintStyle: TextStyle(
@@ -330,7 +333,7 @@ class _SignUpController extends State<SignUpView> {
                     controller: phone,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
-                    validator: (value){
+                    validator: (String value){
                       if(value.isEmpty){
                         return 'Phone No. is required.';
                       }
@@ -355,7 +358,7 @@ class _SignUpController extends State<SignUpView> {
                   TextFormField(
                     controller: dateCtl,
                     textInputAction: TextInputAction.done,
-                    validator: (value){
+                    validator: (String value){
                       if(value.isEmpty){
                         return 'Birthday is Required.';
                       }
@@ -856,6 +859,7 @@ class _SignUpController extends State<SignUpView> {
                     ),
                     onPressed: () {
                       verificationRequest();
+                      print(random);
                     },
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.09,),
@@ -875,8 +879,7 @@ class _SignUpController extends State<SignUpView> {
             data: ThemeData(
               canvasColor: Colors.white,
               shadowColor: Colors.transparent,
-              primaryColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5),
-              accentColor: Color.fromARGB(255, 0xE1, 0xDE, 0xDE),
+              primaryColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color.fromARGB(255, 0xE1, 0xDE, 0xDE)),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -974,7 +977,7 @@ class _SignUpController extends State<SignUpView> {
                       currentStep: currentStep,
                       onStepCancel: cancel,
                       onStepTapped: (step) => goTo(step),
-                      controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
+                      controlsBuilder: (BuildContext context, ControlsDetails controls){
                         return Padding(
                             padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width * 0.07),
                             child: Row(
@@ -990,7 +993,7 @@ class _SignUpController extends State<SignUpView> {
                                       onPrimary: Colors.white,
                                       primary: Colors.grey,
                                     ),
-                                    onPressed: cancel,
+                                    onPressed: controls.onStepCancel,
                                     child: Text(''
                                         'BACK',
                                       style: TextStyle(
@@ -1011,11 +1014,17 @@ class _SignUpController extends State<SignUpView> {
                                       primary: Color(0xff00A8E5),
                                     ),
                                     onPressed: (){
-                                      if(_formKey.currentState.validate()){
+                                      print(_formKey.currentState.validate());
+                                      print(currentStep);
+                                      if(currentStep >= 0 ? true : _formKey.currentState.validate()){
                                         _formKey.currentState.save();
+                                        print(fname.text);
+                                        print(lname.text);
+                                        print(dateCtl.text);
                                         //toastMessage("Username: $username\nPassword: $pass");
                                         next();
                                       }
+                                      
                                     },
                                     child: Text(''
                                         'NEXT',

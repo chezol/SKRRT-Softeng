@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:skrrt_app/appbar-ridebutton/ride_button.dart';
@@ -41,7 +41,7 @@ class _AdminPageState extends State<AdminPage> {
 
   void viewRevenue() async{
 
-    var url = "http://192.168.1.12/skrrt/viewRevenue.php";
+    var url = "http://192.168.1.17/skrrt/viewRevenue.php";
     var data = {
       "month": _currentMonthSelected,
     };
@@ -60,7 +60,7 @@ class _AdminPageState extends State<AdminPage> {
 
   void viewRides() async{
 
-    var url = "http://192.168.1.12/skrrt/viewRides.php";
+    var url = "http://192.168.1.17/skrrt/viewRides.php";
     var data = {
       "month": _currentMonthSelected1,
     };

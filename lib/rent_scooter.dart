@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'dart:async';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:flutter/material.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:http/http.dart' as http;
 import 'sidebar_page.dart';
 import 'navigation.dart';
@@ -28,8 +28,8 @@ class _RentScooterState extends State<RentScooter> {
 
   Future _scan() async {
     //Start scan-blocking until scan
-    String barcode = await scanner.scan();
-    _cameraScanResult = barcode;
+    var barcode = await BarcodeScanner.scan();
+    _cameraScanResult = barcode.rawContent;
     goToNavigationView(context);
   }
 
@@ -39,7 +39,7 @@ class _RentScooterState extends State<RentScooter> {
     var token = await session.get("token");
     var start = await session.get("start");
 
-    var url = "http://192.168.1.12/skrrt/rides.php";  //localhost, change 192.168.1.9 to ur own localhost
+    var url = "http://192.168.1.17/skrrt/rides.php";  //localhost, change 192.168.1.9 to ur own localhost
     var data = {
       "userID": token.toString(),
       "date": DateTime.now().toString(),
@@ -60,7 +60,7 @@ class _RentScooterState extends State<RentScooter> {
 
   void setAvail() async{
     var session = FlutterSession();
-    var url = "http://192.168.1.12/skrrt/scooterAvail.php";
+    var url = "http://192.168.1.17/skrrt/scooterAvail.php";
     var rideID = await session.get("rideID");
     print(rideID);
 
@@ -75,7 +75,7 @@ class _RentScooterState extends State<RentScooter> {
 
   Future _testID() async{
     var session = FlutterSession();
-    var url = "http://192.168.1.12/skrrt/chooseSctr.php";
+    var url = "http://192.168.1.17/skrrt/chooseSctr.php";
     var model = await session.get("model");
     mod = model;
     var start = await session.get("start");

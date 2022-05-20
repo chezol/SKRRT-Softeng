@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/rendering.dart';
+//import 'package:flutter/rendering.dart';
 import 'package:skrrt_app/appbar-ridebutton/skrrt-appbar.dart';
 import 'package:skrrt_app/successful_ride_page.dart';
 import 'sidebar_page.dart';
@@ -65,7 +65,7 @@ class _PaymentPageState extends State<PaymentPage> {
     var time = await session.get("time");
 
     print("here!!!");
-    var url = "http://192.168.1.12/skrrt/balance.php";
+    var url = "http://192.168.1.17/skrrt/balance.php";
     var data = {
       "userID": token.toString(),
     };
@@ -106,7 +106,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
     var _amount = time * 2 + 2;
     print("halo");
-    var url = "http://192.168.1.12/skrrt/pay.php";  //localhost, change 192.168.1.9 to ur own localhost
+    var url = "http://192.168.1.17/skrrt/pay.php";  //localhost, change 192.168.1.9 to ur own localhost
     var data = {
       "rideID" : _rideID.toString(),
       "time":time.toString(),

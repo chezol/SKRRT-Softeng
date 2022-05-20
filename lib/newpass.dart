@@ -32,7 +32,7 @@ class _NewPassState extends State<NewPass> {
   double btmpad2 = 0;
 
   void newPass() async{
-    var url = "http://192.168.1.12/skrrt/newpass.php";
+    var url = "http://192.168.1.17/skrrt/newpass.php";
 
     var id = await session.get("id");
 

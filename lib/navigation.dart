@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+//import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -24,13 +24,13 @@ class _NavigationState extends State<Navigation> {
   BitmapDescriptor mapMarker;
   bool _hasPressedDone = false, _hasParked = false;
   GoogleMapController _controller;
-  Location _location = Location();
+  //Geolocator _location = new Geolocator();
   double distance = -1, distanceTravelled = 0;
   String endLocation;
   String timeElapsed = "0:00";
   Stopwatch _stopwatch = Stopwatch();
   final dur = const Duration(seconds: 1);
-  LocationData _currentLocation;
+  Position _currentLocation;
   var rideID;
 
   var session = FlutterSession();
@@ -40,7 +40,7 @@ class _NavigationState extends State<Navigation> {
   }
   void save() async {
     rideID = await session.get("rideID");
-    var url = "http://192.168.1.12/skrrt/rideFinish.php";
+    var url = "http://192.168.1.17/skrrt/rideFinish.php";
     var data = { // save duration in secs, distance & destination
       "rideID": rideID.toString(),
       "endLocation": endLocation.toString(),
@@ -145,7 +145,7 @@ class _NavigationState extends State<Navigation> {
       );
     });
     _controller = controller;
-    _location.onLocationChanged.listen((l) {
+    Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high, distanceFilter: 100).listen((l) {
       print(l.latitude.toString()+","+l.longitude.toString());
       if (_currentLocation!=null){
         setState(() {
@@ -176,8 +176,8 @@ class _NavigationState extends State<Navigation> {
       });*/
     });
   }
-  void getDistance (LocationData prev, LocationData current) async{
-    double d = await Geolocator().distanceBetween(
+  void getDistance (Position prev, Position current) async{
+    double d = await Geolocator.distanceBetween(
       prev.latitude,
       prev.longitude,
       current.latitude,
@@ -195,7 +195,7 @@ class _NavigationState extends State<Navigation> {
       LatLng p = _markers.elementAt(i).position;
       // Calculating the distance between the start and end positions
       // with a straight path, without considering any route
-      double distanceInMeters = await Geolocator().distanceBetween(
+      double distanceInMeters = await Geolocator.distanceBetween(
         _currentLocation.latitude,
         _currentLocation.longitude,
         p.latitude,

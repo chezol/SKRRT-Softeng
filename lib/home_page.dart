@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+//import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:ui' as ui;
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
     var time = await session.get("time");
 
     print("here!!!");
-    var url = "http://192.168.1.12/skrrt/balance.php";
+    var url = "http://192.168.1.17/skrrt/balance.php";
     var data = {
       "userID": token.toString(),
     };
@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
   }
 
   void getScooterList() async{
-    var url = "http://192.168.1.12/skrrt/home.php";
+    var url = "http://192.168.1.17/skrrt/home.php";
     var data = {
       "station": _station,
     };

@@ -314,9 +314,9 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   Color _circleColor(int index) {
     final ThemeData themeData = Theme.of(context);
     if (!_isDark()) {
-      return widget.steps[index].isActive ? themeData.primaryColor : themeData.accentColor;
+      return widget.steps[index].isActive ? themeData.primaryColor : themeData.colorScheme.secondary;
     } else {
-      return widget.steps[index].isActive ? themeData.accentColor : themeData.backgroundColor;
+      return widget.steps[index].isActive ? themeData.colorScheme.secondary : themeData.backgroundColor;
     }
   }
 
@@ -383,7 +383,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
   Widget _buildVerticalControls() {
     if (widget.controlsBuilder != null)
-      return widget.controlsBuilder(context, onStepContinue: widget.onStepContinue, onStepCancel: widget.onStepCancel);
+      return widget.controlsBuilder(context, ControlsDetails(onStepContinue: widget.onStepContinue, onStepCancel: widget.onStepCancel));
 
     Color cancelColor;
 
