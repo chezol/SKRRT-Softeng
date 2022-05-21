@@ -20,7 +20,7 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
 
-  var first_name = "",last_name= "", ridesTaken="",isAdmin="";
+  var fName = "",lName= "", ridesTaken="0",isAdmin="";
   var token;
   List ridesT;
   FlutterSession session = new FlutterSession();
@@ -33,13 +33,16 @@ class _SideBarState extends State<SideBar> {
     };
     print(data);
     var res = await http.post(url,body: data);
-    print(res.body);
-    ridesT = await jsonDecode(res.body);
-    print(ridesT.toString());
-    first_name = ridesT[0]['fName'];
-    last_name = ridesT[0]['lName'];
-    ridesTaken = ridesT[0]['rideCount'];
-    isAdmin = ridesT[0]['isAdmin'];
+    print(res.body.toString());
+    try{
+      final List user = await jsonDecode(res.body);
+      fName = user[0]['fName'];
+      lName = user[0]['lName'];
+      ridesTaken = user[0]['rideCount'];
+    }catch(e){
+      print(e);
+    }
+  
     setState(() {});
   }
 
@@ -94,7 +97,7 @@ class _SideBarState extends State<SideBar> {
                                 margin: EdgeInsets.only(left: 10),
                                 child: Column(
                                   children: <Widget>[
-                                    Text(first_name + " " + last_name ,style: TextStyle(
+                                    Text('$fName' + " " + '$lName' ,style: TextStyle(
                                         fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Quicksand"
                                     ),),
                                     Text( ridesTaken.toString() + " rides taken", style: TextStyle(
