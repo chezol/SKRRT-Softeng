@@ -289,7 +289,9 @@ class _SignUpController extends State<SignUpView> {
                     },
                     cursorColor: Color.fromARGB(255, 0x00, 0xA8, 0xE5),
                     textInputAction: TextInputAction.next,
-                    textCapitalization: TextCapitalization.words,
+                    inputFormatters: <TextInputFormatter>[
+                        UpperCaseTextFormatter()
+                    ],
                     onSaved: (value) => fname.text = value,
                     decoration: InputDecoration(
                         hintText: 'First Name',
@@ -315,7 +317,9 @@ class _SignUpController extends State<SignUpView> {
                       else return null;
                     },
                     textInputAction: TextInputAction.next,
-                    textCapitalization: TextCapitalization.words,
+                    inputFormatters: <TextInputFormatter>[
+                        UpperCaseTextFormatter()
+                    ],
                     onSaved: (value)=> lname.text = value,
                     decoration: InputDecoration(
                         hintText: 'Last Name',
@@ -1048,4 +1052,18 @@ class _SignUpController extends State<SignUpView> {
       ),
     );
   }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: capitalize(newValue.text),
+      selection: newValue.selection,
+    );
+  }
+}
+String capitalize(String value) {
+  if(value.trim().isEmpty) return "";
+  return "${value[0].toUpperCase()}${value.substring(1).toLowerCase()}";
 }
